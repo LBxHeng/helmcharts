@@ -3,13 +3,13 @@ entries:
   basechart:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-11-12T13:28:43.489325+07:00"
+    created: "2024-11-12T13:29:39.580065+07:00"
     description: A Helm chart for Kubernetes applications
-    digest: 0ae56b374aa3a5ed4aa41bc0ba08c32caeb5da56a92466ad7f819eda6913db23
+    digest: 9bab3c5d18680bc96823796e141766a6e8d3c40f66b2f74d4e71f5fe2925439e
     icon: https://helm.sh/img/helm.svg
     name: basechart
     type: application
     urls:
-    - https://raw.githubusercontent.com/LBxHeng/helm-charts/main/basechart-0.1.2.tgz
-    version: 0.1.2
-generated: "2024-11-12T13:28:43.487693+07:00"
+    - https://raw.githubusercontent.com/LBxHeng/helm-charts/main/basechart-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-11-12T13:29:39.579485+07:00"
