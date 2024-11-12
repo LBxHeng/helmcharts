@@ -1,0 +1,16 @@
+# templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "basechart.fullname" . }}-test-connection"
+  labels:
+    {{- include "basechart.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "basechart.fullname" . }}:{{ .Values.basechart.service.port }}']  # แก้ไขจาก .Values.service.port
+  restartPolicy: Never

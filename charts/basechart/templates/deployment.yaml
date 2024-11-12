@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "basechart.fullname" . }}
+  labels:
+    {{- include "basechart.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.basechart.autoscaling.enabled }}
+  replicas: {{ .Values.basechart.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "basechart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.basechart.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "basechart.selectorLabels" . | nindent 8 }}
+        {{- with .Values.basechart.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.basechart.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "basechart.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.basechart.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.basechart.securityContext | nindent 12 }}
+          image: "{{ .Values.basechart.image.repository }}:{{ .Values.basechart.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.basechart.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.basechart.deployment.containerPort }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.basechart.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.basechart.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.basechart.resources | nindent 12 }}
+          {{- with .Values.basechart.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.basechart.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.basechart.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.basechart.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.basechart.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,20 @@
+# templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "basechart.fullname" . }}
+  labels:
+    {{- include "basechart.labels" . | nindent 4 }}
+  {{- with .Values.basechart.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.basechart.service.type }}
+  ports:
+    - port: {{ .Values.basechart.service.port }}
+      targetPort: {{ .Values.basechart.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "basechart.selectorLabels" . | nindent 4 }}
