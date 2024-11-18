@@ -1,0 +1,6 @@
+dependencies:
+- name: basechart
+  repository: https://lbxheng.github.io/helmcharts
+  version: 1.0.0
+digest: sha256:f42091eda4bb3bb4e21a684f0a587d98d35ba9ef1480574bce0329e4af588fc2
+generated: "2024-11-18T15:20:00.0309+07:00"
