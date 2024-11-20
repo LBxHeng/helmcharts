@@ -1,3 +1,4 @@
+basechart:
   replicaCount: 
 
   image:
